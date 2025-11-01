@@ -1,0 +1,42 @@
+.switcher {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+
+  &:hover {
+    background: #f5f5f5;
+    border-color: #999;
+  }
+
+  &.active {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+
+    &:hover {
+      background: #0056b3;
+      border-color: #0056b3;
+    }
+  }
+}
+
+.flag {
+  font-size: 1.2rem;
+}
+
+.label {
+  font-weight: 500;
+}
