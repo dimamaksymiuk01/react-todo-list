@@ -1,0 +1,58 @@
+{
+  "app": {
+    "title": "Список Завдань",
+    "language": "Мова"
+  },
+  "todo": {
+    "addTask": "Додати Завдання",
+    "taskName": "Назва Завдання",
+    "taskDescription": "Опис Завдання",
+    "deadline": "Дедлайн",
+    "noDeadline": "Без дедлайну",
+    "all": "Всі",
+    "active": "Активні",
+    "completed": "Виконані",
+    "overdue": "Прострочені",
+    "today": "Сьогодні",
+    "upcoming": "Майбутні",
+    "search": "Пошук завдань...",
+    "noTasks": "Завдань не знайдено",
+    "deleteTask": "Видалити завдання",
+    "markComplete": "Позначити як виконане",
+    "markIncomplete": "Позначити як невиконане",
+    "setDeadline": "Встановити дедлайн",
+    "removeDeadline": "Видалити дедлайн"
+  },
+  "history": {
+    "title": "Історія",
+    "undo": "Скасувати",
+    "noHistory": "Історії ще немає",
+    "actions": {
+      "added": "Додано",
+      "completed": "Виконано",
+      "uncompleted": "Знято виконання",
+      "deleted": "Видалено",
+      "updated": "Оновлено",
+      "deadline_set": "Встановлено дедлайн",
+      "deadline_removed": "Видалено дедлайн"
+    }
+  },
+  "validation": {
+    "titleRequired": "Назва завдання обов'язкова",
+    "titleMin": "Назва завдання має бути мінімум 3 символи",
+    "descriptionMin": "Опис має бути мінімум 10 символів"
+  },
+  "sort": {
+    "sortBy": "Сортувати за",
+    "createdAt": "Датою створення",
+    "deadline": "Дедлайном",
+    "title": "Назвою"
+  },
+  "time": {
+    "overdue": "Прострочено {{count}} дн.",
+    "hours": "Через {{count}} год.",
+    "today": "Сьогодні",
+    "tomorrow": "Завтра",
+    "inDays": "Через {{count}} дн."
+  }
+}

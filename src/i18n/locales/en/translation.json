@@ -1,0 +1,58 @@
+{
+  "app": {
+    "title": "Todo List",
+    "language": "Language"
+  },
+  "todo": {
+    "addTask": "Add Task",
+    "taskName": "Task Name",
+    "taskDescription": "Task Description",
+    "deadline": "Deadline",
+    "noDeadline": "No deadline",
+    "all": "All",
+    "active": "Active",
+    "completed": "Completed",
+    "overdue": "Overdue",
+    "today": "Today",
+    "upcoming": "Upcoming",
+    "search": "Search tasks...",
+    "noTasks": "No tasks found",
+    "deleteTask": "Delete task",
+    "markComplete": "Mark as complete",
+    "markIncomplete": "Mark as incomplete",
+    "setDeadline": "Set deadline",
+    "removeDeadline": "Remove deadline"
+  },
+  "history": {
+    "title": "History",
+    "undo": "Undo",
+    "noHistory": "No history yet",
+    "actions": {
+      "added": "Added",
+      "completed": "Completed",
+      "uncompleted": "Uncompleted",
+      "deleted": "Deleted",
+      "updated": "Updated",
+      "deadline_set": "Deadline set",
+      "deadline_removed": "Deadline removed"
+    }
+  },
+  "validation": {
+    "titleRequired": "Task name is required",
+    "titleMin": "Task name must be at least 3 characters",
+    "descriptionMin": "Description must be at least 10 characters"
+  },
+  "sort": {
+    "sortBy": "Sort by",
+    "createdAt": "Creation date",
+    "deadline": "Deadline",
+    "title": "Name"
+  },
+  "time": {
+    "overdue": "Overdue {{count}} days",
+    "hours": "In {{count}} hours",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "inDays": "In {{count}} days"
+  }
+}
