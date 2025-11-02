@@ -4,7 +4,29 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>test</title>
+    <title>Todo List</title>
+
+    <script>
+      (function() {
+        function getInitialTheme() {
+          const savedTheme = localStorage.getItem('theme');
+          if (savedTheme === 'light' || savedTheme === 'dark') {
+            return savedTheme;
+          }
+
+          if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark';
+          }
+
+          return 'light';
+        }
+
+        const theme = getInitialTheme();
+        document.documentElement.setAttribute('data-theme', theme);
+
+        document.documentElement.classList.add('theme-loading');
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
