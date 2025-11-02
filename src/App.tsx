@@ -1,8 +1,14 @@
 import styles from './assets/App.module.scss';
 import './assets/normalize.css';
 
-import { LanguageSwitcher } from '@/components';
-import { ThemeSwitcher } from '@/components';
+import {
+  FilterBar,
+  LanguageSwitcher,
+  TodoForm,
+  ThemeSwitcher,
+  History,
+  TodoList,
+} from '@/components';
 
 function App() {
   return (
@@ -16,6 +22,20 @@ function App() {
           </div>
         </div>
       </header>
+
+      <main className={styles.main}>
+        <div className={styles.content}>
+          <div className={styles.todoSection}>
+            <TodoForm />
+            <FilterBar />
+            <TodoList />
+          </div>
+
+          <aside className={styles.sidebar}>
+            <History />
+          </aside>
+        </div>
+      </main>
     </div>
   );
 }
