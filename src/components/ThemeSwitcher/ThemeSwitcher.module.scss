@@ -1,9 +1,10 @@
 .switchContainer {
   position: relative;
   display: inline-block;
-  width: 45px;
+  width: 48px;
   height: 26px;
-  font-size: 13px;
+  cursor: pointer;
+  transition: var(--todo-transition);
 
   input {
     opacity: 0;
@@ -13,37 +14,68 @@
 }
 
 .slider {
-  --background: #ff868e;
-  --box-shadow: #fff000;
   position: absolute;
-  cursor: pointer;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--background);
-  transition: 0.5s;
+  background: var(--muted);
+  border: 1px solid var(--border);
   border-radius: 30px;
+  transition: var(--todo-transition);
+  box-shadow: var(--todo-shadow);
 
   &::before {
-    position: absolute;
     content: '';
+    position: absolute;
     height: 18px;
-    width: 17px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--foreground);
     border-radius: 50%;
-    left: 10%;
-    bottom: 15%;
-    box-shadow: inset 8px -4px 0px 0px var(--box-shadow);
-    background: var(--background);
-    transition: 0.5s;
+    transition: var(--todo-transition);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
   }
 }
 
+.switchContainer:hover .slider {
+  background: var(--accent);
+  box-shadow: var(--todo-shadow-hover);
+}
+
 .switchContainer input:checked + .slider {
-  background-color: var(--background);
+  background-color: var(--primary);
+  border-color: var(--ring);
 
   &::before {
-    transform: translateX(100%);
-    box-shadow: inset 15px -4px 0px 15px var(--box-shadow);
+    transform: translateX(22px);
+    background-color: var(--primary-foreground);
   }
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  transition: opacity var(--todo-transition);
+}
+
+.sun {
+  left: 6px;
+  color: var(--warning);
+}
+
+.moon {
+  right: 6px;
+  color: var(--foreground);
+}
+
+.switchContainer input:checked ~ .sun {
+  opacity: 0;
+}
+
+.switchContainer input:not(:checked) ~ .moon {
+  opacity: 0;
 }

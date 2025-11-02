@@ -1,3 +1,4 @@
+import { Languages } from 'lucide-react';
 import { FC } from 'react';
 
 import styles from './LanguageSwitcher.module.scss';
@@ -8,24 +9,23 @@ import { Language } from '@/types';
 export const LanguageSwitcher: FC = () => {
   const { language, changeLanguage } = useLanguage();
 
-  const languages: { code: Language; label: string; flag: string }[] = [
-    { code: 'en', label: 'English', flag: '🇬🇧' },
-    { code: 'uk', label: 'Українська', flag: '🇺🇦' },
+  const languages: { code: Language; label: string }[] = [
+    { code: 'en', label: 'EN' },
+    { code: 'uk', label: 'UA' },
   ];
 
+  const nextLanguage = language === 'en' ? 'uk' : 'en';
+  const currentLabel = languages.find((lang) => lang.code === language)?.label;
+
   return (
-    <div className={styles.switcher}>
-      {languages.map((lang) => (
-        <button
-          key={lang.code}
-          className={`${styles.button} ${language === lang.code ? styles.active : ''}`}
-          onClick={() => changeLanguage(lang.code)}
-          aria-label={`Switch to ${lang.label}`}
-        >
-          <span className={styles.flag}>{lang.flag}</span>
-          <span className={styles.label}>{lang.label}</span>
-        </button>
-      ))}
-    </div>
+    <button
+      className={styles.languageSwitcher}
+      onClick={() => changeLanguage(nextLanguage)}
+      title='Змінити мову / Change language'
+      aria-label={`Switch to ${nextLanguage === 'en' ? 'English' : 'Українська'}`}
+    >
+      <Languages />
+      <span className={styles.text}>{currentLabel}</span>
+    </button>
   );
 };

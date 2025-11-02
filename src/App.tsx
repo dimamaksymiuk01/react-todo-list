@@ -1,22 +1,21 @@
-import { useTranslation } from 'react-i18next';
-
-import './assets/App.css';
+import styles from './assets/App.module.scss';
 import './assets/normalize.css';
 
 import { LanguageSwitcher } from '@/components';
 import { ThemeSwitcher } from '@/components';
-import { useLanguage } from '@/context/LanguageContext/LanguageContext';
 
 function App() {
-  const { t } = useTranslation();
-  const { language } = useLanguage();
-
   return (
-    <div>
-      <LanguageSwitcher />
-      <ThemeSwitcher />
-      <p>{t('todo.search')}</p>
-      <p>{language}</p>
+    <div className={styles.app}>
+      <header className={styles.header}>
+        <div className={styles.headerContent}>
+          <h1 className={styles.title}>Todo List</h1>
+          <div className={styles.switchers}>
+            <LanguageSwitcher />
+            <ThemeSwitcher />
+          </div>
+        </div>
+      </header>
     </div>
   );
 }
