@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next';
 
-import './App.css';
+import './assets/App.css';
 import './assets/normalize.css';
 
 import { LanguageSwitcher } from '@/components';
+import { ThemeSwitcher } from '@/components';
 import { useLanguage } from '@/context/LanguageContext/LanguageContext';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   return (
     <div>
       <LanguageSwitcher />
+      <ThemeSwitcher />
       <p>{t('todo.search')}</p>
       <p>{language}</p>
     </div>
