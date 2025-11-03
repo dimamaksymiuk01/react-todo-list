@@ -5,7 +5,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/',
+  base: '/react-todo-list/',
   build: {
     outDir: 'docs',
   },
