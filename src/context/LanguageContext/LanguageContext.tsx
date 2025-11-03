@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, FC } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -11,7 +11,11 @@ import { Language, LanguageContextType } from '@/types';
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export const LanguageProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
+interface LanguageProviderProps {
+  children: ReactNode;
+}
+
+export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   const { i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();

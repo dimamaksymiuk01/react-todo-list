@@ -1,16 +1,15 @@
-import React, {
+import {
   createContext,
   useContext,
   useReducer,
   useEffect,
   useMemo,
-  FC,
+  ReactNode,
 } from 'react';
 
 import { todoReducer } from './todoReducer';
 
-import { TodoContextType } from '@/types';
-import { Todo, FilterType, TodoState } from '@/types';
+import { TodoContextType, Todo, FilterType, TodoState } from '@/types';
 
 const TodoContext = createContext<TodoContextType | undefined>(undefined);
 
@@ -21,7 +20,11 @@ const initialState: TodoState = {
   searchQuery: '',
 };
 
-export const TodoProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
+interface TodoProviderProps {
+  children: ReactNode;
+}
+
+export const TodoProvider = ({ children }: TodoProviderProps) => {
   const [state, dispatch] = useReducer(todoReducer, initialState, (initial) => {
     try {
       const saved = localStorage.getItem('todoState');

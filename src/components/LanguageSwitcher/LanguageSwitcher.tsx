@@ -1,12 +1,11 @@
 import { Languages } from 'lucide-react';
-import { FC } from 'react';
 
 import styles from './LanguageSwitcher.module.scss';
 
 import { useLanguage } from '@/context/LanguageContext/LanguageContext';
 import { Language } from '@/types';
 
-export const LanguageSwitcher: FC = () => {
+export const LanguageSwitcher = () => {
   const { language, changeLanguage } = useLanguage();
 
   const languages: { code: Language; label: string }[] = [
