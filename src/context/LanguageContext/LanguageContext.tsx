@@ -2,11 +2,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import {
-  getLanguageFromPath,
-  addLanguagePrefix,
-  removeLanguagePrefix,
-} from '@/i18n/middleware';
+import { getLanguageFromPath, addLanguagePrefix } from '@/i18n/middleware';
 import { Language, LanguageContextType } from '@/types';
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -29,17 +25,15 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
     if (langFromUrl !== language) {
       setLanguage(langFromUrl);
       i18n.changeLanguage(langFromUrl);
-      localStorage.setItem('language', langFromUrl);
     }
-  }, [location.pathname, language, i18n]);
+  }, [location.pathname]);
 
   useEffect(() => {
     i18n.changeLanguage(language);
   }, [language, i18n]);
 
   const changeLanguage = (lang: Language) => {
-    const currentPath = removeLanguagePrefix(location.pathname);
-    const newPath = addLanguagePrefix(currentPath, lang);
+    const newPath = addLanguagePrefix(location.pathname, lang);
 
     setLanguage(lang);
     localStorage.setItem('language', lang);
@@ -56,7 +50,7 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
   if (!context) {
-    throw new Error('useLanguage error');
+    throw new Error('useLanguage must be used within LanguageProvider');
   }
   return context;
 };

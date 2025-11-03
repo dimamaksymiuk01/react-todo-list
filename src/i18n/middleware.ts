@@ -12,15 +12,19 @@ export const removeLanguagePrefix = (pathname: string): string => {
   const firstSegment = segments[0] || '';
 
   if (URL_LANGUAGE_MAP[firstSegment]) {
-    return '/' + segments.slice(1).join('/');
+    const remaining = segments.slice(1);
+    return remaining.length > 0 ? '/' + remaining.join('/') : '/';
   }
 
-  return pathname;
+  return pathname || '/';
 };
 
 export const addLanguagePrefix = (pathname: string, language: Language): string => {
   const cleanPath = removeLanguagePrefix(pathname);
-  const prefix = language === 'en' ? '' : '/ua';
 
-  return prefix + cleanPath;
+  if (language === 'en') {
+    return cleanPath;
+  }
+
+  return '/ua' + (cleanPath === '/' ? '' : cleanPath);
 };
