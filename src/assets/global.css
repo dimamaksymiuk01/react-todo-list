@@ -34,10 +34,11 @@
 
   --todo-transition: all 0.2s ease;
 
-  --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  --font-family-base:
+    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  --font-family-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas,
-    'Courier New', monospace;
+  --font-family-mono:
+    'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
 
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
@@ -89,9 +90,10 @@
 }
 
 html:not(.theme-loading) * {
-  transition: background-color var(--todo-transition),
-              border-color var(--todo-transition),
-              color var(--todo-transition);
+  transition:
+    background-color var(--todo-transition),
+    border-color var(--todo-transition),
+    color var(--todo-transition);
 }
 
 body.theme-transitioning * {
@@ -108,7 +110,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-family-base);
-  font-feature-settings: "rlig" 1, "calt" 1;
+  font-feature-settings:
+    'rlig' 1,
+    'calt' 1;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -117,7 +121,6 @@ body {
 code {
   font-family: var(--font-family-mono);
 }
-
 
 .highlight {
   background-color: oklch(0.9 0.1 85);
