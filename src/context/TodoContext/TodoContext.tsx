@@ -9,8 +9,8 @@ import React, {
 
 import { todoReducer } from './todoReducer';
 
-import { Todo, FilterType, TodoState, TodoContextType } from '@/types';
-import { isOverdue, isDueToday } from '@/utils/deadline';
+import { TodoContextType } from '@/types';
+import { Todo, FilterType, TodoState } from '@/types';
 
 const TodoContext = createContext<TodoContextType | undefined>(undefined);
 
@@ -19,8 +19,6 @@ const initialState: TodoState = {
   history: [],
   filter: 'all',
   searchQuery: '',
-  sortBy: 'createdAt',
-  sortOrder: 'desc',
 };
 
 export const TodoProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -49,14 +47,18 @@ export const TodoProvider: FC<{ children: React.ReactNode }> = ({ children }) =>
     }
   }, [state]);
 
-  const addTodo = (title: string, description?: string, deadline?: number) => {
+  const addTodo = (title: string, description?: string) => {
+    const trimmedTitle = title.trim();
+    const trimmedDescription = description?.trim();
+
+    if (!trimmedTitle) return;
+
     const newTodo: Todo = {
       id: Date.now().toString(),
-      title,
-      description,
+      title: trimmedTitle,
+      description: trimmedDescription || undefined,
       completed: false,
       createdAt: Date.now(),
-      deadline,
     };
     dispatch({ type: 'ADD_TODO', payload: newTodo });
   };
@@ -67,10 +69,6 @@ export const TodoProvider: FC<{ children: React.ReactNode }> = ({ children }) =>
 
   const deleteTodo = (id: string) => {
     dispatch({ type: 'DELETE_TODO', payload: id });
-  };
-
-  const updateTodo = (id: string, updates: Partial<Todo>) => {
-    dispatch({ type: 'UPDATE_TODO', payload: { id, updates } });
   };
 
   const setFilter = (filter: FilterType) => {
@@ -95,23 +93,6 @@ export const TodoProvider: FC<{ children: React.ReactNode }> = ({ children }) =>
       case 'completed':
         filtered = filtered.filter((todo) => todo.completed);
         break;
-      case 'overdue':
-        filtered = filtered.filter((todo) => !todo.completed && isOverdue(todo.deadline));
-        break;
-      case 'today':
-        filtered = filtered.filter(
-          (todo) => !todo.completed && isDueToday(todo.deadline),
-        );
-        break;
-      case 'upcoming':
-        filtered = filtered.filter(
-          (todo) =>
-            !todo.completed &&
-            todo.deadline &&
-            !isOverdue(todo.deadline) &&
-            !isDueToday(todo.deadline),
-        );
-        break;
     }
 
     if (state.searchQuery.trim()) {
@@ -123,26 +104,7 @@ export const TodoProvider: FC<{ children: React.ReactNode }> = ({ children }) =>
       );
     }
 
-    filtered.sort((a, b) => {
-      let compareValue = 0;
-
-      switch (state.sortBy) {
-        case 'createdAt':
-          compareValue = a.createdAt - b.createdAt;
-          break;
-        case 'deadline':
-          if (!a.deadline && !b.deadline) compareValue = 0;
-          else if (!a.deadline) compareValue = 1;
-          else if (!b.deadline) compareValue = -1;
-          else compareValue = a.deadline - b.deadline;
-          break;
-        case 'title':
-          compareValue = a.title.localeCompare(b.title);
-          break;
-      }
-
-      return state.sortOrder === 'asc' ? compareValue : -compareValue;
-    });
+    filtered.sort((a, b) => b.createdAt - a.createdAt);
 
     return filtered;
   };
@@ -153,7 +115,6 @@ export const TodoProvider: FC<{ children: React.ReactNode }> = ({ children }) =>
       addTodo,
       toggleTodo,
       deleteTodo,
-      updateTodo,
       setFilter,
       setSearch,
       undoLastAction,

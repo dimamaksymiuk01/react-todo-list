@@ -7,8 +7,7 @@ import { VALIDATION } from '@/constants';
 
 interface TodoFormData {
   title: string;
-  description?: string;
-  deadline?: Date | null;
+  description?: string | null;
 }
 
 export const useTodoForm = () => {
@@ -17,23 +16,32 @@ export const useTodoForm = () => {
   const schema: yup.ObjectSchema<TodoFormData> = yup.object({
     title: yup
       .string()
+      .transform((value) => value?.trim())
       .required(t('validation.titleRequired'))
-      .min(VALIDATION.TITLE_MIN_LENGTH, t('validation.titleMin')),
+      .min(VALIDATION.TITLE_MIN_LENGTH, t('validation.titleMin'))
+      .max(VALIDATION.TITLE_MAX_LENGTH, t('validation.titleMax'))
+      .test('no-only-spaces', t('validation.titleRequired'), (value) => {
+        return value ? value.trim().length > 0 : false;
+      }),
     description: yup
       .string()
-      .optional()
+      .transform((value) => (value ? value.trim() : ''))
+      .notRequired()
       .test('min-if-exists', t('validation.descriptionMin'), (value) => {
         if (!value || value.trim() === '') return true;
-        return value.length >= VALIDATION.DESCRIPTION_MIN_LENGTH;
+        return value.trim().length >= VALIDATION.DESCRIPTION_MIN_LENGTH;
+      })
+      .test('max-if-exists', t('validation.descriptionMax'), (value) => {
+        if (!value || value.trim() === '') return true;
+        return value.trim().length <= VALIDATION.DESCRIPTION_MAX_LENGTH;
       }),
-  }) as yup.ObjectSchema<TodoFormData>;
+  });
 
   return useForm<TodoFormData>({
     resolver: yupResolver(schema),
     defaultValues: {
       title: '',
       description: '',
-      deadline: null,
     },
     mode: 'onChange',
   });

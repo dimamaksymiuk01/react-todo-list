@@ -1,49 +1,60 @@
-import { Plus, CheckCircle, Trash2 } from 'lucide-react';
+import { Undo } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import styles from './History.module.scss';
 
-const mockHistory = [
-  { id: 1, action: 'add', text: 'Додано: Купити молоко', time: '2 хв тому' },
-  { id: 2, action: 'complete', text: 'Виконано: Прибрати кімнату', time: '5 хв тому' },
-  { id: 3, action: 'add', text: 'Додано: Написати звіт', time: '10 хв тому' },
-  { id: 4, action: 'delete', text: 'Видалено: Погладити кота', time: '15 хв тому' },
-  { id: 5, action: 'complete', text: 'Виконано: Зробити зарядку', time: '20 хв тому' },
-];
+import { useLanguage } from '@/context/LanguageContext/LanguageContext';
+import { useTodo } from '@/context/TodoContext/TodoContext';
+import { getTimeAgo } from '@/utils/time';
 
 export const History = () => {
   const { t } = useTranslation();
+  const { language } = useLanguage();
+  const { state, undoLastAction } = useTodo();
 
-  const getIcon = (action: string) => {
-    switch (action) {
-      case 'add':
-        return <Plus className={styles.iconAdd} />;
-      case 'complete':
-        return <CheckCircle className={styles.iconComplete} />;
-      case 'delete':
-        return <Trash2 className={styles.iconDelete} />;
-      default:
-        return null;
-    }
+  const getActionText = (action: string) => {
+    return t(`history.${action}`);
   };
 
   return (
     <div className={styles.history}>
       <div className={styles.header}>
         <h2 className={styles.title}>{t('changeHistory')}</h2>
+        {state.history.length > 0 && (
+          <button
+            className={styles.undoButton}
+            onClick={undoLastAction}
+            title={t('undo')}
+          >
+            <Undo />
+          </button>
+        )}
       </div>
 
-      <div className={styles.list}>
-        {mockHistory.map((item) => (
-          <div key={item.id} className={styles.item}>
-            <div className={styles.icon}>{getIcon(item.action)}</div>
-            <div className={styles.content}>
-              <p className={styles.text}>{item.text}</p>
-              <span className={styles.time}>{item.time}</span>
+      {state.history.length === 0 ? (
+        <div className={styles.empty}>{t('noHistory')}</div>
+      ) : (
+        <div className={styles.list}>
+          {[...state.history].reverse().map((item) => (
+            <div key={item.id} className={styles.item}>
+              <div className={`${styles.dot} ${styles[`dot--${item.action}`]}`} />
+              <div className={styles.content}>
+                <p className={styles.text}>
+                  <span
+                    className={`${styles.action} ${styles[`action--${item.action}`]}`}
+                  >
+                    {getActionText(item.action)}
+                  </span>
+                  : {item.todoTitle}
+                </p>
+                <span className={styles.time}>
+                  {getTimeAgo(item.timestamp, language)}
+                </span>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

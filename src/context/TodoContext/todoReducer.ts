@@ -89,35 +89,6 @@ export const todoReducer = (state: TodoState, action: TodoAction): TodoState => 
       };
     }
 
-    case 'UPDATE_TODO': {
-      const todo = state.todos.find((t) => t.id === action.payload.id);
-      if (!todo) return state;
-
-      const newState: TodoState = {
-        ...state,
-        todos: state.todos.map((t) =>
-          t.id === action.payload.id ? { ...t, ...action.payload.updates } : t,
-        ),
-      };
-
-      return {
-        ...newState,
-        history: addHistoryRecord(
-          state.history,
-          {
-            action: 'updated',
-            todoTitle: todo.title,
-            metadata: action.payload.updates.deadline
-              ? {
-                  deadline: action.payload.updates.deadline,
-                }
-              : undefined,
-          },
-          state,
-        ),
-      };
-    }
-
     case 'SET_FILTER':
       return {
         ...state,
@@ -127,7 +98,7 @@ export const todoReducer = (state: TodoState, action: TodoAction): TodoState => 
     case 'SET_SEARCH':
       return {
         ...state,
-        searchQuery: action.payload,
+        searchQuery: action.payload.trim(),
       };
 
     case 'UNDO_LAST_ACTION': {

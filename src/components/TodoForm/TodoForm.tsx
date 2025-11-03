@@ -3,15 +3,26 @@ import { useTranslation } from 'react-i18next';
 
 import styles from './TodoForm.module.scss';
 
-interface TodoFormProps {
-  showValidation?: boolean;
-}
+import { useTodo } from '@/context/TodoContext/TodoContext';
+import { useTodoForm } from '@/hooks/useTodoForm';
 
-export const TodoForm = ({ showValidation = true }: TodoFormProps) => {
+export const TodoForm = () => {
   const { t } = useTranslation();
+  const { addTodo } = useTodo();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useTodoForm();
+
+  const onSubmit = (data: { title: string; description?: string | null }) => {
+    addTodo(data.title, data.description ?? undefined);
+    reset();
+  };
 
   return (
-    <div className={styles.todoForm}>
+    <form className={styles.todoForm} onSubmit={handleSubmit(onSubmit)}>
       <h2 className={styles.header}>
         <Plus />
         <span>{t('addNewTask')}</span>
@@ -25,12 +36,13 @@ export const TodoForm = ({ showValidation = true }: TodoFormProps) => {
           <input
             type='text'
             placeholder={t('taskNamePlaceholder')}
-            className={`${styles.input} ${showValidation ? styles.inputError : ''}`}
+            className={`${styles.input} ${errors.title ? styles.inputError : ''}`}
+            {...register('title')}
           />
-          {showValidation && (
+          {errors.title && (
             <p className={styles.error}>
               <AlertCircle />
-              {t('minLength3')}
+              {errors.title.message}
             </p>
           )}
         </div>
@@ -38,21 +50,28 @@ export const TodoForm = ({ showValidation = true }: TodoFormProps) => {
         <div className={styles.field}>
           <label className={styles.label}>
             {t('taskDescription')}
-            <span className={styles.optional}>{t('optional')}</span>
+            <span className={styles.optional}> {t('optional')}</span>
           </label>
           <textarea
             placeholder={t('descriptionPlaceholder')}
             rows={3}
-            className={styles.textarea}
+            className={`${styles.textarea} ${errors.description ? styles.inputError : ''}`}
+            {...register('description')}
           />
-          <p className={styles.hint}>{t('descriptionHint')}</p>
+          {errors.description && (
+            <p className={styles.error}>
+              <AlertCircle />
+              {errors.description.message}
+            </p>
+          )}
+          {!errors.description && <p className={styles.hint}>{t('descriptionHint')}</p>}
         </div>
 
-        <button className={styles.button}>
+        <button type='submit' className={styles.button}>
           <Plus />
           {t('addTaskButton')}
         </button>
       </div>
-    </div>
+    </form>
   );
 };
