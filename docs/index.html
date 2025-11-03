@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Todo List — керуй своїми завданнями легко</title>
+    <meta name="title" content="Todo List — керуй своїми завданнями легко" />
+    <meta
+      name="description"
+      content="Простий і зручний Todo List для планування щоденних справ. Додавайте, редагуйте та відстежуйте виконання завдань з будь-якого пристрою."
+    />
+    <meta
+      name="keywords"
+      content="todo list, список завдань, планувальник, менеджер задач, to-do app, органайзер, продуктивність"
+    />
+    <meta name="author" content="Todo App Team" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://your-todo-app.example.com/" />
+    <meta property="og:title" content="Todo List — керуй своїми завданнями легко" />
+    <meta
+      property="og:description"
+      content="Зручний та мінімалістичний менеджер задач. Організуйте день, створюйте списки, досягайте цілей."
+    />
+    <meta property="og:image" content="/og-image.jpg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://your-todo-app.example.com/" />
+    <meta name="twitter:title" content="Todo List — керуй своїми завданнями легко" />
+    <meta
+      name="twitter:description"
+      content="Простий у використанні Todo List для ефективного управління вашими завданнями."
+    />
+    <meta name="twitter:image" content="/og-image.jpg" />
+
+    <link rel="icon" type="image/svg+xml" href="/react-todo-list/vite.svg" />
+    <meta name="theme-color" content="#4f46e5" />
+
+    <link rel="canonical" href="https://your-todo-app.example.com/" />
+
+    <script>
+      (function () {
+        function getInitialTheme() {
+          const savedTheme = localStorage.getItem('theme');
+          if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme;
+          if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+            return 'dark';
+          return 'light';
+        }
+        const theme = getInitialTheme();
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.classList.add('theme-loading');
+      })();
+    </script>
+    <script type="module" crossorigin src="/react-todo-list/assets/index-wl9xLY5p.js"></script>
+    <link rel="stylesheet" crossorigin href="/react-todo-list/assets/index-5S70dbQF.css">
+  </head>
+
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
