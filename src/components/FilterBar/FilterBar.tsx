@@ -1,14 +1,23 @@
 import { Search } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import styles from './FilterBar.module.scss';
 
 import { useTodo } from '@/context/TodoContext/TodoContext';
+import { useDebounce } from '@/hooks/useDebounce';
 import { FilterType } from '@/types';
 
 export const FilterBar = () => {
   const { t } = useTranslation();
   const { state, setFilter, setSearch } = useTodo();
+  const [searchInput, setSearchInput] = useState(state.searchQuery);
+
+  const debouncedSearch = useDebounce(searchInput, 300);
+
+  useEffect(() => {
+    setSearch(debouncedSearch);
+  }, [debouncedSearch, setSearch]);
 
   const filters: { value: FilterType; label: string }[] = [
     { value: 'all', label: t('all') },
@@ -36,8 +45,8 @@ export const FilterBar = () => {
           type='text'
           placeholder={t('searchPlaceholder')}
           className={styles.searchInput}
-          value={state.searchQuery}
-          onChange={(e) => setSearch(e.target.value)}
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
         />
       </div>
     </div>

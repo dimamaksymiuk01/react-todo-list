@@ -1,10 +1,14 @@
-import React, { createContext, useContext, useState, useEffect, FC } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 import { Theme, ThemeContextType } from '@/types';
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
+interface ThemeProviderProps {
+  children: ReactNode;
+}
+
+export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setThemeState] = useState<Theme>(() => {
     const currentTheme = document.documentElement.getAttribute('data-theme') as Theme;
     return currentTheme || 'light';
@@ -16,9 +20,7 @@ export const ThemeProvider: FC<{ children: React.ReactNode }> = ({ children }) =
 
   useEffect(() => {
     document.body.classList.add('theme-transitioning');
-
     document.documentElement.setAttribute('data-theme', theme);
-
     localStorage.setItem('theme', theme);
 
     const timer = setTimeout(() => {
