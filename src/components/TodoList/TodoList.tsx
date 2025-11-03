@@ -1,3 +1,4 @@
+import { ListTodo } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import TodoItem from '../TodoItem/TodoItem';
@@ -24,7 +25,10 @@ export const TodoList = () => {
       </div>
 
       {filteredTodos.length === 0 ? (
-        <div className={styles.empty}>{t('noTasks')}</div>
+        <div className={styles.empty}>
+          <ListTodo className={styles.emptyIcon} />
+          <p className={styles.emptyText}>{t('noTasks')}</p>
+        </div>
       ) : (
         <div className={styles.list}>
           {filteredTodos.map((todo) => (
@@ -33,14 +37,16 @@ export const TodoList = () => {
         </div>
       )}
 
-      <div className={styles.stats}>
-        <span>
-          {t('activeCount')}: {activeTodos.length}
-        </span>
-        <span>
-          {t('completedCount')}: {completedTodos.length}
-        </span>
-      </div>
+      {state.todos.length > 0 && (
+        <div className={styles.stats}>
+          <span>
+            {t('activeCount')}: {activeTodos.length}
+          </span>
+          <span>
+            {t('completedCount')}: {completedTodos.length}
+          </span>
+        </div>
+      )}
     </div>
   );
 };

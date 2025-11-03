@@ -98,7 +98,7 @@ export const todoReducer = (state: TodoState, action: TodoAction): TodoState => 
     case 'SET_SEARCH':
       return {
         ...state,
-        searchQuery: action.payload.trim(),
+        searchQuery: action.payload,
       };
 
     case 'UNDO_LAST_ACTION': {

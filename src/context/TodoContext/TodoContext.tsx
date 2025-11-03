@@ -95,12 +95,12 @@ export const TodoProvider: FC<{ children: React.ReactNode }> = ({ children }) =>
         break;
     }
 
-    if (state.searchQuery.trim()) {
-      const query = state.searchQuery.toLowerCase();
+    const trimmedQuery = state.searchQuery.trim().toLowerCase();
+    if (trimmedQuery) {
       filtered = filtered.filter(
         (todo) =>
-          todo.title.toLowerCase().includes(query) ||
-          (todo.description && todo.description.toLowerCase().includes(query)),
+          todo.title.toLowerCase().includes(trimmedQuery) ||
+          (todo.description && todo.description.toLowerCase().includes(trimmedQuery)),
       );
     }
 
