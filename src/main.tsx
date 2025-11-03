@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
-import { ThemeProvider, LanguageProvider } from '@/context';
+import { ThemeProvider, LanguageProvider, TodoProvider } from '@/context';
 import { AppRouter } from '@/router/AppRouter';
 
 import '@/i18n/config';
@@ -13,7 +13,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <ThemeProvider>
         <LanguageProvider>
-          <AppRouter />
+          <TodoProvider>
+            <AppRouter />
+          </TodoProvider>
         </LanguageProvider>
       </ThemeProvider>
     </BrowserRouter>

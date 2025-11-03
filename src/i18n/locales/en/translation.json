@@ -17,5 +17,21 @@
   "taskListTitle": "Task List",
   "tasksCount": "tasks",
   "activeCount": "Active",
-  "completedCount": "Completed"
+  "completedCount": "Completed",
+  "noTasks": "No tasks yet",
+  "noHistory": "No history yet",
+  "undo": "Undo last action",
+  "validation": {
+    "titleRequired": "Task name is required",
+    "titleMin": "Name must contain at least 3 characters",
+    "titleMax": "Name must contain at most 100 characters",
+    "descriptionMin": "Description must contain at least 10 characters",
+    "descriptionMax": "Description must contain at most 500 characters"
+  },
+  "history": {
+    "added": "Added",
+    "completed": "Completed",
+    "uncompleted": "Uncompleted",
+    "deleted": "Deleted"
+  }
 }

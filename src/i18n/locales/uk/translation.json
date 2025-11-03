@@ -17,5 +17,21 @@
   "taskListTitle": "Список завдань",
   "tasksCount": "завдань",
   "activeCount": "Активних",
-  "completedCount": "Виконано"
+  "completedCount": "Виконано",
+  "noTasks": "Завдань поки немає",
+  "noHistory": "Історії поки немає",
+  "undo": "Скасувати останню дію",
+  "validation": {
+    "titleRequired": "Назва завдання обов'язкова",
+    "titleMin": "Назва має містити мінімум 3 символи",
+    "titleMax": "Назва має містити максимум 100 символів",
+    "descriptionMin": "Опис має містити мінімум 10 символів",
+    "descriptionMax": "Опис має містити максимум 500 символів"
+  },
+  "history": {
+    "added": "Додано",
+    "completed": "Виконано",
+    "uncompleted": "Знято виконання",
+    "deleted": "Видалено"
+  }
 }
