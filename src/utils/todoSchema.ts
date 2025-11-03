@@ -7,7 +7,9 @@ export interface TodoFormData {
   description?: string | null;
 }
 
-export const createTodoSchema = (t: (key: string) => string): yup.ObjectSchema<TodoFormData> =>
+export const createTodoSchema = (
+  t: (key: string) => string,
+): yup.ObjectSchema<TodoFormData> =>
   yup.object({
     title: yup
       .string()
