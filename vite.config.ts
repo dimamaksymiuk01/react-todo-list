@@ -7,33 +7,21 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   plugins: [
     react(),
+
     {
-      name: 'create-spa-fallback',
+      name: 'create-404-redirect',
       closeBundle() {
         const outDir = path.resolve(__dirname, 'docs');
-        const notFoundPath = path.join(outDir, '404.html');
-        const nojekyllPath = path.join(outDir, '.nojekyll');
+        const file = path.join(outDir, '404.html');
 
         if (!fs.existsSync(outDir)) {
           fs.mkdirSync(outDir, { recursive: true });
         }
-        const redirectScript = `<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Redirecting...</title>
-    <script>
-      var path = window.location.pathname.replace('/react-todo-list', '');
-      var redirect = '/react-todo-list/' + (path === '/' || path === '' ? '' : '?p=' + path);
-      window.location.replace(redirect);
-    </script>
-  </head>
-  <body>
-  </body>
-</html>`;
 
-        fs.writeFileSync(notFoundPath, redirectScript);
-        fs.writeFileSync(nojekyllPath, '');
+        fs.writeFileSync(
+          file,
+          `<meta http-equiv="refresh" content="0; url=/react-todo-list/" />`,
+        );
       },
     },
   ],
