@@ -2,7 +2,6 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { getLanguageFromPath, addLanguagePrefix } from '@/i18n/middleware';
 import { Language, LanguageContextType } from '@/types';
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -17,20 +16,21 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   const location = useLocation();
 
   const [language, setLanguage] = useState<Language>(() => {
-    const langFromUrl = getLanguageFromPath(location.pathname);
-    if (langFromUrl !== 'en' || location.pathname.includes('/ua')) {
-      return langFromUrl;
+    if (location.pathname.startsWith('/ua')) {
+      return 'uk';
     }
-    const savedLang = localStorage.getItem('language') as Language;
-    return savedLang || 'en';
+    const saved = localStorage.getItem('language') as Language;
+    return saved || 'en';
   });
 
   useEffect(() => {
-    const langFromUrl = getLanguageFromPath(location.pathname);
-    if (langFromUrl !== language) {
-      setLanguage(langFromUrl);
-      i18n.changeLanguage(langFromUrl);
-      localStorage.setItem('language', langFromUrl);
+    const isUkrainianPath = location.pathname.startsWith('/ua');
+    const newLang: Language = isUkrainianPath ? 'uk' : 'en';
+
+    if (newLang !== language) {
+      setLanguage(newLang);
+      i18n.changeLanguage(newLang);
+      localStorage.setItem('language', newLang);
     }
   }, [location.pathname]);
 
@@ -38,8 +38,17 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
     i18n.changeLanguage(language);
   }, [language, i18n]);
 
+  useEffect(() => {
+    if (location.pathname === '/') {
+      const saved = localStorage.getItem('language') as Language;
+      if (saved === 'uk') {
+        navigate('/ua', { replace: true });
+      }
+    }
+  }, []);
+
   const changeLanguage = (lang: Language) => {
-    const newPath = addLanguagePrefix(location.pathname, lang);
+    const newPath = lang === 'uk' ? '/ua' : '/';
 
     setLanguage(lang);
     localStorage.setItem('language', lang);
