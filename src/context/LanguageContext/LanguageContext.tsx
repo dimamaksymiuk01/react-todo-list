@@ -17,7 +17,12 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   const location = useLocation();
 
   const [language, setLanguage] = useState<Language>(() => {
-    return getLanguageFromPath(location.pathname);
+    const langFromUrl = getLanguageFromPath(location.pathname);
+    if (langFromUrl !== 'en' || location.pathname.includes('/ua')) {
+      return langFromUrl;
+    }
+    const savedLang = localStorage.getItem('language') as Language;
+    return savedLang || 'en';
   });
 
   useEffect(() => {
@@ -25,6 +30,7 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
     if (langFromUrl !== language) {
       setLanguage(langFromUrl);
       i18n.changeLanguage(langFromUrl);
+      localStorage.setItem('language', langFromUrl);
     }
   }, [location.pathname]);
 
